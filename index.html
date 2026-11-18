@@ -19,12 +19,14 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
+      /* Fondo con tu imagen de banner y una capa oscura semitransparente encima para legibilidad */
       background-color: var(--borgona-oscuro);
       background-image: 
-        radial-gradient(var(--amarillo) 1px, transparent 1px),
-        radial-gradient(rgba(255, 209, 0, 0.15) 1px, transparent 1px);
-      background-size: 40px 40px;
-      background-position: 0 0, 20px 20px;
+        linear-gradient(rgba(35, 2, 10, 0.82), rgba(35, 2, 10, 0.88)), 
+        url('imagenes/banners/banner1');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
       color: var(--crema);
       font-family: 'Montserrat', sans-serif;
       min-height: 100vh;
@@ -33,18 +35,6 @@
       align-items: center;
       padding: 20px;
       position: relative;
-    }
-
-    body::before {
-      content: "JUMBO ★ SPOTIFY ★ JUMBO ★ SPOTIFY ★";
-      position: absolute;
-      top: 10px;
-      font-size: 0.65rem;
-      letter-spacing: 4px;
-      color: var(--amarillo);
-      opacity: 0.25;
-      font-weight: 800;
-      pointer-events: none;
     }
 
     header {
@@ -79,7 +69,8 @@
     .contenedor {
       width: 100%;
       max-width: 480px;
-      background: rgba(35, 2, 10, 0.92);
+      background: rgba(35, 2, 10, 0.85); /* Fondo de la tarjeta translúcido */
+      backdrop-filter: blur(8px); /* Efecto vidrio esmerilado moderno */
       border: 3px solid var(--amarillo);
       border-radius: 24px;
       padding: 20px;
@@ -193,7 +184,7 @@
       font-size: 1.2rem;
     }
 
-    input[type="text"], list {
+    input[type="text"] {
       width: 100%;
       background: rgba(0, 0, 0, 0.5);
       border: 1.5px solid rgba(255, 209, 0, 0.4);
@@ -340,7 +331,7 @@
       </div>
     </div>
 
-    <!-- Paso 3: Canción con Casilla Única Inteligente (Escribe o Selecciona) -->
+    <!-- Paso 3: Canción -->
     <div class="paso">
       <div class="paso-titulo">3. Canción de Ryan Castro (Elige o escribe otra)</div>
       <input type="text" id="inputCancion" list="sugerenciasRyan" placeholder="Escribe o selecciona una canción..." oninput="tocarSonidoCustom(290)" />
@@ -388,19 +379,18 @@
     let baseActual = 'leche';
     let toppingsSeleccionados = [];
 
-    // Sintetizadores de audio únicos y variados por cada tipo de interacción
     function tocarSonidoUnico(tipo) {
       try {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         const ctx = new AudioContext();
         let notas = [];
 
-        if (tipo === 'leche') notas = [220, 277, 330]; // Acorde cálido
-        else if (tipo === 'blanco') notas = [330, 392, 493]; // Acorde brillante
-        else if (tipo === 'mani') notas = [200, 250]; // Seco y percusivo
-        else if (tipo === 'oreo') notas = [300, 370, 440]; // Crujiente
-        else if (tipo === 'brownie') notas = [150, 190, 240]; // Profundo
-        else notas = [261, 329, 392, 523]; // Final épico
+        if (tipo === 'leche') notas = [220, 277, 330];
+        else if (tipo === 'blanco') notas = [330, 392, 493];
+        else if (tipo === 'mani') notas = [200, 250];
+        else if (tipo === 'oreo') notas = [300, 370, 440];
+        else if (tipo === 'brownie') notas = [150, 190, 240];
+        else notas = [261, 329, 392, 523];
 
         notas.forEach((freq, index) => {
           setTimeout(() => {
@@ -419,9 +409,7 @@
             osc.stop(ctx.currentTime + 0.45);
           }, index * 75);
         });
-      } catch (e) {
-        console.log('Audio no soportado');
-      }
+      } catch (e) {}
     }
 
     function tocarSonidoCustom(freq) {
@@ -480,7 +468,6 @@
       const frase = document.getElementById('fraseDedicatoria').value.trim() || 'Un momento dulce con todo el flow.';
       const cancionIngresada = document.getElementById('inputCancion').value.trim() || 'Jordan - Ryan Castro';
       
-      // URI base oficial de Spotify para generar el código escaneable real
       const linkSpotifyDefault = 'https://open.spotify.com/track/6Z8R6FR4GXCCKBp5WwP0M5';
       const spotifyCodeUrl = `https://scannables.scdn.co/uri/plain/jpeg/1280/black/white/600/${encodeURIComponent(linkSpotifyDefault)}`;
 
