@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Awoolatina Jumbo x Ryan Castro | Crea tu Barra</title>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --borgona: #4A0818;
+      --borgona-oscuro: #2B030D;
+      --amarillo: #FFD100;
+      --amarillo-brillo: #FFE853;
+      --crema: #FFF8E7;
+      --spotify: #1DB954;
+      --choco-leche: #4E2A14;
+      --choco-blanco: #F3E5AB;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: radial-gradient(circle at top, var(--borgona), var(--borgona-oscuro));
+      color: var(--crema);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .badge-awoo {
+      background: var(--amarillo);
+      color: var(--borgona-oscuro);
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-family: 'Anton', sans-serif;
+      font-size: 2.8rem;
+      color: var(--amarillo);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-shadow: 3px 3px 0px #000;
+      line-height: 1;
+    }
+
+    .subtitulo {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin-top: 6px;
+    }
+
+    .contenedor {
+      width: 100%;
+      max-width: 460px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 209, 0, 0.3);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Visualizador de la Chocolatina */
+    .preview-barra {
+      background: var(--choco-leche);
+      border: 4px solid var(--amarillo);
+      border-radius: 16px;
+      height: 150px;
+      margin-bottom: 20px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.4s ease;
+      overflow: hidden;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.4);
+    }
+
+    .barra-logo {
+      font-family: 'Anton', sans-serif;
+      font-size: 2rem;
+      color: var(--amarillo);
+      text-shadow: 2px 2px 0 #000;
+      z-index: 2;
+      letter-spacing: 1px;
+    }
+
+    .toppings-visuales {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      z-index: 2;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .chip-topping {
+      background: rgba(0, 0, 0, 0.65);
+      color: var(--amarillo);
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--amarillo);
+    }
+
+    /* Secciones */
+    .paso {
+      margin-bottom: 20px;
+    }
+
+    .paso-titulo {
+      font-weight: 800;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      color: var(--amarillo);
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .opciones-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    button.opcion {
+      background: rgba(0, 0, 0, 0.35);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      color: var(--crema);
+      padding: 12px;
+      border-radius: 14px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    button.opcion.activo {
+      background: var(--amarillo);
+      color: var(--borgona-oscuro);
+      border-color: var(--amarillo);
+      font-weight: 800;
+      transform: scale(1.02);
+    }
+
+    button.opcion.fijo {
+      border-style: dashed;
+      border-color: var(--amarillo);
+      opacity: 0.9;
+      cursor: default;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1.5px solid rgba(255, 209, 0, 0.4);
+      border-radius: 12px;
+      padding: 12px;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: var(--amarillo);
+    }
+
+    .btn-principal {
+      width: 100%;
+      background: var(--amarillo);
+      color: var(--borgona-oscuro);
+      border: none;
+      border-radius: 14px;
+      padding: 15px;
+      font-family: 'Anton', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 6px 0 #b89600;
+      transition: transform 0.1s;
+    }
+
+    .btn-principal:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #b89600;
+    }
+
+    /* Tarjeta Final */
+    #tarjeta-resultado {
+      display: none;
+      margin-top: 24px;
+      background: linear-gradient(145deg, #5c0a1e, #24020a);
+      border: 3px solid var(--amarillo);
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .frase-sonora {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.6rem;
+      color: var(--amarillo);
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .dedicatoria-box {
+      background: rgba(0, 0, 0, 0.45);
+      padding: 12px;
+      border-radius: 12px;
+      font-style: italic;
+      font-size: 0.9rem;
+      margin-bottom: 14px;
+      border-left: 4px solid var(--amarillo);
+    }
+
+    .spotify-pill {
+      background: #121212;
+      border: 1px solid var(--spotify);
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      font-size: 0.8rem;
+    }
+
+    .spotify-dot {
+      height: 12px;
+      width: 12px;
+      background: var(--spotify);
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 6px;
+    }
+
+    .acciones-envio {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .btn-secundario {
+      background: transparent;
+      border: 1.5px solid var(--amarillo);
+      color: var(--amarillo);
+      padding: 10px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="badge-awoo">Edición Limitada • Awoolandia</span>
+    <h1>Awoolatina Jumbo</h1>
+    <p class="subtitulo">Arma tu mezcla, ponle ritmo y guarda el recuerdo</p>
+  </header>
+
+  <main class="contenedor">
+    <!-- Vista previa de la barra -->
+    <div class="preview-barra" id="barraVisual">
+      <div class="barra-logo">JUMBO AWOO</div>
+      <div class="toppings-visuales" id="listaToppingsVisual">
+        <span class="chip-topping">🥜 Maní Clásico</span>
+      </div>
+    </div>
+
+    <!-- Paso 1: Sabor -->
+    <div class="paso">
+      <div class="paso-titulo"><span>1. Elige tu Base</span> <span id="vibeTag">Vibe: Perreo Pesao</span></div>
+      <div class="opciones-grid">
+        <button class="opcion activo" onclick="seleccionarBase('leche', this)">🍫 Chocolate de Leche</button>
+        <button class="opcion" onclick="seleccionarBase('blanco', this)">🤍 Chocolate Blanco</button>
+      </div>
+    </div>
+
+    <!-- Paso 2: Toppings -->
+    <div class="paso">
+      <div class="paso-titulo"><span>2. Toppings (Maní incluido)</span></div>
+      <div class="opciones-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+        <button class="opcion fijo">🥜 Maní (Fijo)</button>
+        <button class="opcion" onclick="toggleTopping('Oreo', this)">🍪 Oreo</button>
+        <button class="opcion" onclick="toggleTopping('Brownie', this)"> brownies</button>
+      </div>
+    </div>
+
+    <!-- Paso 3: Spotify & Dedicatoria -->
+    <div class="paso">
+      <div class="paso-titulo"><span>3. Tu Sello y Canción</span></div>
+      <input type="text" id="nombreUsuario" placeholder="Tu nombre (Ej. Daniela)" maxlength="25" />
+      <input type="text" id="cancionFavorita" placeholder="Canción de Ryan Castro para el código Spotify" maxlength="40" />
+      <input type="text" id="fraseDedicatoria" placeholder="Escribe una dedicatoria o frase para recordar..." maxlength="110" />
+    </div>
+
+    <button class="btn-principal" onclick="generarExperiencia()">Crear mi Awoolatina</button>
+
+    <!-- Resultado Final -->
+    <section id="tarjeta-resultado">
+      <div class="frase-sonora" id="tituloFinal">LA EDICIÓN DE ORO DE DANIELA</div>
+      <p style="font-size: 0.8rem; margin-bottom: 10px;" id="resumenIngredientes"></p>
+      
+      <div class="dedicatoria-box" id="textoDedicatoriaFinal">
+        "Pa' que nunca se olvide este momento."
+      </div>
+
+      <div class="spotify-pill">
+        <div style="text-align: left;">
+          <div><span class="spotify-dot"></span><strong>Código Spotify:</strong> <span id="cancionFinal">Jordan</span></div>
+          <div style="font-size: 0.7rem; opacity: 0.8;" id="playlistAsignada">Playlist desbloqueada: Awoolandia Calle & Flow</div>
+        </div>
+        <span style="font-family: monospace; letter-spacing: 2px; color: var(--spotify); font-weight: bold;">||l|l||l|</span>
+      </div>
+
+      <div class="acciones-envio">
+        <button class="btn-secundario" onclick="enviarCorreo()">✉️ Enviar al Correo</button>
+        <button class="btn-secundario" onclick="compartirAirDrop()">📲 Compartir / AirDrop</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    let baseActual = 'leche';
+    let toppingsSeleccionados = ['Maní'];
+
+    // Generador de beats cortos con Web Audio API (sin archivos externos)
+    function tocarBeat(frecuencia, tipo = 'triangle') {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = tipo;
+      osc.frequency.setValueAtTime(frecuencia, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(45, ctx.currentTime + 0.18);
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.18);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.19);
+    }
+
+    function seleccionarBase(tipo, btn) {
+      baseActual = tipo;
+      document.querySelectorAll('.paso:nth-child(2) .opcion').forEach(b => b.classList.remove('activo'));
+      btn.classList.add('activo');
+
+      const barra = document.getElementById('barraVisual');
+      const vibeTag = document.getElementById('vibeTag');
+
+      if (tipo === 'leche') {
+        barra.style.background = 'var(--choco-leche)';
+        vibeTag.innerText = 'Vibe: Perreo Pesao';
+        tocarBeat(140, 'sawtooth');
+      } else {
+        barra.style.background = 'var(--choco-blanco)';
+        vibeTag.innerText = 'Vibe: Flow Melódico';
+        tocarBeat(220, 'sine');
+      }
+    }
+
+    function toggleTopping(nombre, btn) {
+      btn.classList.toggle('activo');
+      if (toppingsSeleccionados.includes(nombre)) {
+        toppingsSeleccionados = toppingsSeleccionados.filter(t => t !== nombre);
+        tocarBeat(110, 'triangle');
+      } else {
+        toppingsSeleccionados.push(nombre);
+        tocarBeat(280, 'square');
+      }
+      actualizarVisualToppings();
+    }
+
+    function actualizarVisualToppings() {
+      const contenedor = document.getElementById('listaToppingsVisual');
+      contenedor.innerHTML = toppingsSeleccionados.map(t => `<span class="chip-topping">✨ ${t}</span>`).join('');
+    }
+
+    function generarExperiencia() {
+      tocarBeat(320, 'sawtooth');
+      const nombre = document.getElementById('nombreUsuario').value.trim() || 'Awoo Fan';
+      const cancion = document.getElementById('cancionFavorita').value.trim() || 'Ritmo de Awoolandia';
+      const frase = document.getElementById('fraseDedicatoria').value.trim() || 'Un momento dulce con todo el flow.';
+
+      const frasesSonoras = [
+        `EL FLOW PESAO DE ${nombre.toUpperCase()}`,
+        `LA EDICIÓN DE ORO DE ${nombre.toUpperCase()}`,
+        `AWOOLATINA EXCLUSIVA BY ${nombre.toUpperCase()}`
+      ];
+      const tituloElegido = frasesSonoras[Math.floor(Math.random() * frasesSonoras.length)];
+
+      document.getElementById('tituloFinal').innerText = tituloElegido;
+      document.getElementById('resumenIngredientes').innerText = 
+        `Base: Chocolate ${baseActual === 'leche' ? 'de Leche' : 'Blanco'} • Mezcla: ${toppingsSeleccionados.join(' + ')}`;
+      document.getElementById('textoDedicatoriaFinal').innerText = `"${frase}"`;
+      document.getElementById('cancionFinal').innerText = cancion;
+
+      document.getElementById('playlistAsignada').innerText = baseActual === 'leche'
+        ? 'Playlist desbloqueada: Awoolandia Calle & Dembow'
+        : 'Playlist desbloqueada: Awoolandia Chill & Romantiqueo';
+
+      document.getElementById('tarjeta-resultado').style.display = 'block';
+      document.getElementById('tarjeta-resultado').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function enviarCorreo() {
+      const titulo = document.getElementById('tituloFinal').innerText;
+      const ingredientes = document.getElementById('resumenIngredientes').innerText;
+      const frase = document.getElementById('textoDedicatoriaFinal').innerText;
+      const cancion = document.getElementById('cancionFinal').innerText;
+
+      const asunto = encodeURIComponent(`🍫 Mi Awoolatina Jumbo x Ryan Castro`);
+      const cuerpo = encodeURIComponent(`${titulo}\n${ingredientes}\n\nDedicatoria: ${frase}\nCanción Spotify: ${cancion}`);
+      window.location.href = `mailto:?subject=${asunto}&body=${cuerpo}`;
+    }
+
+    async function compartirAirDrop() {
+      const titulo = document.getElementById('tituloFinal').innerText;
+      const frase = document.getElementById('textoDedicatoriaFinal').innerText;
+      const textoCompartir = `${titulo} 🍫🔥 ${frase} — Creado en Awoolandia Jumbo x Spotify`;
+
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: 'Mi Awoolatina Jumbo',
+            text: textoCompartir,
+            url: window.location.href
+          });
+        } catch (err) {
+          console.log('Compartir cancelado');
+        }
+      } else {
+        alert('En iPhone (Safari), este botón abre directamente el menú de AirDrop. Copia tu tarjeta: ' + textoCompartir);
+      }
+    }
+  </script>
+</body>
+</html>
