@@ -87,7 +87,6 @@
       z-index: 2;
     }
 
-    /* Simulador de la Chocolatina con Relieve */
     .chocolatina-3d {
       width: 100%;
       height: 160px;
@@ -194,7 +193,7 @@
       font-size: 1.2rem;
     }
 
-    input[type="text"], select {
+    input[type="text"], list {
       width: 100%;
       background: rgba(0, 0, 0, 0.5);
       border: 1.5px solid rgba(255, 209, 0, 0.4);
@@ -203,10 +202,10 @@
       color: #fff;
       font-family: 'Montserrat', sans-serif;
       font-size: 0.85rem;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
     }
 
-    input:focus, select:focus {
+    input:focus {
       outline: none;
       border-color: var(--amarillo);
     }
@@ -246,7 +245,7 @@
       font-family: 'Anton', sans-serif;
       font-size: 1.5rem;
       color: var(--amarillo);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       line-height: 1.1;
     }
 
@@ -305,7 +304,6 @@
   </header>
 
   <main class="contenedor">
-    <!-- Visualizador Real de la Chocolatina con Bajo Relieve -->
     <div class="chocolatina-3d" id="chocolatinaVisual">
       <div class="porcion-chocolate"></div><div class="porcion-chocolate"></div><div class="porcion-chocolate"></div><div class="porcion-chocolate"></div><div class="porcion-chocolate"></div><div class="porcion-chocolate"></div>
       <div class="porcion-chocolate"></div><div class="porcion-chocolate"></div><div class="porcion-chocolate"></div><div class="porcion-chocolate"></div><div class="porcion-chocolate"></div><div class="porcion-chocolate"></div>
@@ -317,7 +315,7 @@
       </div>
     </div>
 
-    <!-- Paso 1: Base de la Chocolatina -->
+    <!-- Paso 1: Base -->
     <div class="paso">
       <div class="paso-titulo">1. Elige tu base de chocolate</div>
       <div class="opciones-grid" style="grid-template-columns: 1fr 1fr;">
@@ -326,7 +324,7 @@
       </div>
     </div>
 
-    <!-- Paso 2: Toppings con Iconos (Maní ahora opcional) -->
+    <!-- Paso 2: Toppings -->
     <div class="paso">
       <div class="paso-titulo">2. Elige tus Toppings</div>
       <div class="opciones-grid">
@@ -342,23 +340,23 @@
       </div>
     </div>
 
-    <!-- Paso 3: Canción con Recomendaciones + Escritura Libre -->
+    <!-- Paso 3: Canción con Casilla Única Inteligente (Escribe o Selecciona) -->
     <div class="paso">
-      <div class="paso-titulo">3. Elige o escribe una canción</div>
-      <select id="selectCancion" onchange="seleccionarSugerencia(this)">
-        <option value="">-- Elige una recomendación de Ryan Castro --</option>
-        <option value="Jordan|https://open.spotify.com/track/6Z8R6FR4GXCCKBp5WwP0M5">Jordan - Ryan Castro</option>
-        <option value="Una Cita (Remix)|https://open.spotify.com/track/15X3K9n2xXW0P9C3wYt0c3">Una Cita (Remix) - Ryan Castro</option>
-        <option value="Monastery|https://open.spotify.com/track/307a5EwEhn5m6h42U95bXh">Monastery - Ryan Castro</option>
-        <option value="El Cantante del Ghetto|https://open.spotify.com/track/4jVv4Y51T9qW00J2F4F7z0">El Cantante del Ghetto - Ryan Castro</option>
-      </select>
-      <input type="text" id="inputCancionLibre" placeholder="O escribe otra canción o artista aquí..." maxlength="45" />
+      <div class="paso-titulo">3. Canción de Ryan Castro (Elige o escribe otra)</div>
+      <input type="text" id="inputCancion" list="sugerenciasRyan" placeholder="Escribe o selecciona una canción..." oninput="tocarSonidoCustom(290)" />
+      <datalist id="sugerenciasRyan">
+        <option value="Jordan - Ryan Castro">
+        <option value="Una Cita (Remix) - Ryan Castro">
+        <option value="Monastery - Ryan Castro">
+        <option value="El Cantante del Ghetto - Ryan Castro">
+        <option value="Wasa Wasa - Ryan Castro">
+      </datalist>
     </div>
 
     <!-- Paso 4: Datos del Usuario -->
     <div class="paso">
-      <input type="text" id="nombreUsuario" placeholder="Tu nombre..." maxlength="25" />
-      <input type="text" id="fraseDedicatoria" placeholder="Escribe una frase para recordar..." maxlength="100" />
+      <input type="text" id="nombreUsuario" placeholder="Tu nombre..." maxlength="25" oninput="tocarSonidoCustom(340)" />
+      <input type="text" id="fraseDedicatoria" placeholder="Escribe una frase para recordar..." maxlength="100" oninput="tocarSonidoCustom(380)" />
     </div>
 
     <button type="button" class="btn-principal" onclick="generarExperiencia()">Generar mi Tarjeta</button>
@@ -380,8 +378,8 @@
       </div>
 
       <div class="acciones-envio">
-        <button type="button" class="btn-secundario" onclick="enviarCorreo()">✉️ Enviar Correo</button>
-        <button type="button" class="btn-secundario" onclick="compartirAirDrop()">📲 Compartir / AirDrop</button>
+        <button type="button" class="btn-secundario" onclick="copiarResumen()">📋 Copiar Resumen</button>
+        <button type="button" class="btn-secundario" onclick="compartirNativo()">📲 Compartir / AirDrop</button>
       </div>
     </section>
   </main>
@@ -389,40 +387,62 @@
   <script>
     let baseActual = 'leche';
     let toppingsSeleccionados = [];
-    let linkSpotifySeleccionado = 'https://open.spotify.com/track/6Z8R6FR4GXCCKBp5WwP0M5'; // Por defecto Jordan
 
-    // Sintetizador de audio melódico y duradero (Arpegio suave tipo teclado)
-    function tocarAcordeMelodico() {
+    // Sintetizadores de audio únicos y variados por cada tipo de interacción
+    function tocarSonidoUnico(tipo) {
       try {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         const ctx = new AudioContext();
-        
-        const frecuencias = [261.63, 329.63, 392.00, 523.25]; // Acorde armonioso (C major)
-        frecuencias.forEach((freq, index) => {
+        let notas = [];
+
+        if (tipo === 'leche') notas = [220, 277, 330]; // Acorde cálido
+        else if (tipo === 'blanco') notas = [330, 392, 493]; // Acorde brillante
+        else if (tipo === 'mani') notas = [200, 250]; // Seco y percusivo
+        else if (tipo === 'oreo') notas = [300, 370, 440]; // Crujiente
+        else if (tipo === 'brownie') notas = [150, 190, 240]; // Profundo
+        else notas = [261, 329, 392, 523]; // Final épico
+
+        notas.forEach((freq, index) => {
           setTimeout(() => {
             if (ctx.state === 'suspended') ctx.resume();
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
-            osc.type = 'sine';
+            osc.type = tipo === 'final' ? 'triangle' : 'sine';
             osc.frequency.setValueAtTime(freq, ctx.currentTime);
             
-            gain.gain.setValueAtTime(0.15, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+            gain.gain.setValueAtTime(0.12, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
             
             osc.connect(gain);
             gain.connect(ctx.destination);
             osc.start();
-            osc.stop(ctx.currentTime + 0.55);
-          }, index * 90);
+            osc.stop(ctx.currentTime + 0.45);
+          }, index * 75);
         });
       } catch (e) {
-        console.log('Audio contextual bloqueado o no soportado');
+        console.log('Audio no soportado');
       }
+    }
+
+    function tocarSonidoCustom(freq) {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(0.05, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.12);
+      } catch(e) {}
     }
 
     function seleccionarBase(tipo) {
       baseActual = tipo;
-      tocarAcordeMelodico();
+      tocarSonidoUnico(tipo);
 
       const btnLeche = document.getElementById('btnLeche');
       const btnBlanco = document.getElementById('btnBlanco');
@@ -445,7 +465,7 @@
     }
 
     function toggleTopping(nombre, btn) {
-      tocarAcordeMelodico();
+      tocarSonidoUnico(nombre.toLowerCase());
       btn.classList.toggle('activo');
       if (toppingsSeleccionados.includes(nombre)) {
         toppingsSeleccionados = toppingsSeleccionados.filter(t => t !== nombre);
@@ -454,48 +474,39 @@
       }
     }
 
-    function seleccionarSugerencia(select) {
-      if (!select.value) return;
-      tocarAcordeMelodico();
-      const partes = select.value.split('|');
-      const nombreCancion = partes[0];
-      linkSpotifySeleccionado = partes[1];
-      
-      // Llena automáticamente el input libre para que sepas qué canción quedó seleccionada
-      document.getElementById('inputCancionLibre').value = nombreCancion;
-    }
-
     function generarExperiencia() {
-      tocarAcordeMelodico();
+      tocarSonidoUnico('final');
       const nombre = document.getElementById('nombreUsuario').value.trim() || 'Awoo Fan';
       const frase = document.getElementById('fraseDedicatoria').value.trim() || 'Un momento dulce con todo el flow.';
-      const cancionLibre = document.getElementById('inputCancionLibre').value.trim();
+      const cancionIngresada = document.getElementById('inputCancion').value.trim() || 'Jordan - Ryan Castro';
       
-      const nombreFinalCancion = cancionLibre !== '' ? cancionLibre : 'Jordan - Ryan Castro';
-
-      // Generador oficial de códigos de Spotify
-      const spotifyCodeUrl = `https://scannables.scdn.co/uri/plain/jpeg/1280/black/white/600/${encodeURIComponent(linkSpotifySeleccionado)}`;
+      // URI base oficial de Spotify para generar el código escaneable real
+      const linkSpotifyDefault = 'https://open.spotify.com/track/6Z8R6FR4GXCCKBp5WwP0M5';
+      const spotifyCodeUrl = `https://scannables.scdn.co/uri/plain/jpeg/1280/black/white/600/${encodeURIComponent(linkSpotifyDefault)}`;
 
       document.getElementById('tituloFinal').innerText = `El flow único de ${nombre}`;
       document.getElementById('textoDedicatoriaFinal').innerText = `"${frase}"`;
-      document.getElementById('nombreCancionFinal').innerText = nombreFinalCancion;
+      document.getElementById('nombreCancionFinal').innerText = cancionIngresada;
       document.getElementById('imagenSpotifyCode').src = spotifyCodeUrl;
 
       document.getElementById('tarjeta-resultado').style.display = 'block';
       document.getElementById('tarjeta-resultado').scrollIntoView({ behavior: 'smooth' });
     }
 
-    function enviarCorreo() {
+    function copiarResumen() {
       const titulo = document.getElementById('tituloFinal').innerText;
       const frase = document.getElementById('textoDedicatoriaFinal').innerText;
       const cancion = document.getElementById('nombreCancionFinal').innerText;
+      const textoCompleto = `🍫 JUMBO x SPOTIFY\n${titulo}\nDedicatoria: ${frase}\nCanción: ${cancion}`;
 
-      const asunto = encodeURIComponent(`🍫 Mi Creación Exclusiva Jumbo x Spotify`);
-      const cuerpo = encodeURIComponent(`${titulo}\n\nDedicatoria: ${frase}\nCanción: ${cancion}`);
-      window.location.href = `mailto:?subject=${asunto}&body=${cuerpo}`;
+      navigator.clipboard.writeText(textoCompleto).then(() => {
+        alert('¡Resumen copiado con éxito! Pégalo en tu WhatsApp o red social favorita.');
+      }).catch(err => {
+        alert('No se pudo copiar automáticamente.');
+      });
     }
 
-    async function compartirAirDrop() {
+    async function compartirNativo() {
       const titulo = document.getElementById('tituloFinal').innerText;
       const frase = document.getElementById('textoDedicatoriaFinal').innerText;
       const textoCompartir = `${titulo} 🍫🔥 ${frase} — JUMBO x SPOTIFY`;
@@ -511,7 +522,7 @@
           console.log('Compartir cancelado');
         }
       } else {
-        alert('En iPhone, este botón abre directamente AirDrop. Contenido copiado.');
+        copiarResumen();
       }
     }
   </script>
