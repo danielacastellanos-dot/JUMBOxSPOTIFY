@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JUMBO X SPOTIFY | Edición Awoolandia</title>
+  <title>JUMBO X SPOTIFY | Edición Especial</title>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -13,7 +13,6 @@
       --crema: #FFF8E7;
       --spotify: #1DB954;
       --choco-leche: #5C3217;
-      --choco-negro: #221208;
       --choco-blanco: #F5E6CC;
     }
 
@@ -21,7 +20,6 @@
 
     body {
       background-color: var(--borgona-oscuro);
-      /* Patrón de fondo con detalles urbanos y estilo marca */
       background-image: 
         radial-gradient(var(--amarillo) 1px, transparent 1px),
         radial-gradient(rgba(255, 209, 0, 0.15) 1px, transparent 1px);
@@ -37,9 +35,8 @@
       position: relative;
     }
 
-    /* Elementos decorativos urbanos estilo spray/amarillo */
     body::before {
-      content: "JUMBO ★ SPOTIFY ★ AWOOLANDIA ★";
+      content: "JUMBO ★ SPOTIFY ★ JUMBO ★ SPOTIFY ★";
       position: absolute;
       top: 10px;
       font-size: 0.65rem;
@@ -82,7 +79,7 @@
     .contenedor {
       width: 100%;
       max-width: 480px;
-      background: rgba(35, 2, 10, 0.9);
+      background: rgba(35, 2, 10, 0.92);
       border: 3px solid var(--amarillo);
       border-radius: 24px;
       padding: 20px;
@@ -90,7 +87,7 @@
       z-index: 2;
     }
 
-    /* Simulador Real de la Chocolatina con Relieve */
+    /* Simulador de la Chocolatina con Relieve */
     .chocolatina-3d {
       width: 100%;
       height: 160px;
@@ -108,7 +105,6 @@
       transition: background 0.4s ease;
     }
 
-    /* Cuadritos de la chocolatina */
     .porcion-chocolate {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 4px;
@@ -117,7 +113,6 @@
       box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
     }
 
-    /* Placa central en bajo relieve */
     .placa-central {
       position: absolute;
       top: 20%;
@@ -137,7 +132,7 @@
     .texto-placa {
       font-family: 'Anton', sans-serif;
       font-size: 1.4rem;
-      color: rgba(255, 255, 255, 0.85);
+      color: rgba(255, 255, 255, 0.9);
       letter-spacing: 2px;
       text-shadow: 0 1px 2px rgba(0,0,0,0.9), 0 -1px 1px rgba(255,255,255,0.2);
       text-align: center;
@@ -152,7 +147,6 @@
       text-shadow: 0 1px 2px rgba(0,0,0,0.8);
     }
 
-    /* Secciones del Formulario */
     .paso {
       margin-bottom: 18px;
     }
@@ -196,7 +190,7 @@
       transform: scale(1.03);
     }
 
-    .icono- topping {
+    .icono-topping {
       font-size: 1.2rem;
     }
 
@@ -238,7 +232,6 @@
       box-shadow: 0 2px 0 #b89600;
     }
 
-    /* Tarjeta Final Estilo Spotify Code Real */
     #tarjeta-resultado {
       display: none;
       margin-top: 20px;
@@ -267,7 +260,6 @@
       border-left: 3px solid var(--amarillo);
     }
 
-    /* Contenedor del Código de Spotify Real */
     .spotify-code-container {
       background: #121212;
       border: 1px solid var(--spotify);
@@ -308,19 +300,17 @@
 <body>
 
   <header>
-    <span class="badge-awoo">Collab Exclusiva • Awoolandia</span>
+    <span class="badge-awoo">Collab Exclusiva</span>
     <h1>Jumbo x Spotify</h1>
   </header>
 
   <main class="contenedor">
     <!-- Visualizador Real de la Chocolatina con Bajo Relieve -->
     <div class="chocolatina-3d" id="chocolatinaVisual">
-      <!-- Generamos celdas visuales de la barra -->
       <div class="porcion-chocolate"></div><div class="porcion-chocolate"></div><div class="porcion-chocolate"></div><div class="porcion-chocolate"></div><div class="porcion-chocolate"></div><div class="porcion-chocolate"></div>
       <div class="porcion-chocolate"></div><div class="porcion-chocolate"></div><div class="porcion-chocolate"></div><div class="porcion-chocolate"></div><div class="porcion-chocolate"></div><div class="porcion-chocolate"></div>
       <div class="porcion-chocolate"></div><div class="porcion-chocolate"></div><div class="porcion-chocolate"></div><div class="porcion-chocolate"></div><div class="porcion-chocolate"></div><div class="porcion-chocolate"></div>
       
-      <!-- Placa Central con Bajo Relieve -->
       <div class="placa-central">
         <div class="texto-placa">JUMBO X SPOTIFY</div>
         <div class="subtexto-placa" id="subtextoBase">CHOCOLATE DE LECHE</div>
@@ -331,67 +321,67 @@
     <div class="paso">
       <div class="paso-titulo">1. Elige tu base de chocolate</div>
       <div class="opciones-grid" style="grid-template-columns: 1fr 1fr;">
-        <button class="opcion-base activo" onclick="seleccionarBase('leche', this)">🍫 Leche</button>
-        <button class="opcion-base" onclick="seleccionarBase('blanco', this)">🤍 Blanco</button>
+        <button type="button" class="opcion-base activo" id="btnLeche" onclick="seleccionarBase('leche')">🍫 Leche</button>
+        <button type="button" class="opcion-base" id="btnBlanco" onclick="seleccionarBase('blanco')">🤍 Blanco</button>
       </div>
     </div>
 
-    <!-- Paso 2: Toppings con Iconos -->
+    <!-- Paso 2: Toppings con Iconos (Maní ahora opcional) -->
     <div class="paso">
-      <div class="paso-titulo">2. Toppings (Maní incluido por defecto)</div>
+      <div class="paso-titulo">2. Elige tus Toppings</div>
       <div class="opciones-grid">
-        <button class="opcion-base" style="border-style:dashed; border-color:var(--amarillo); cursor:default;">
-          <span class="icono-topping">🥜</span> Maní Fijo
+        <button type="button" class="opcion-topping" id="topMani" onclick="toggleTopping('Maní', this)">
+          <span class="icono-topping">🥜</span> Maní
         </button>
-        <button class="opcion-topping" onclick="toggleTopping('Oreo', this)">
+        <button type="button" class="opcion-topping" id="topOreo" onclick="toggleTopping('Oreo', this)">
           <span class="icono-topping">🍪</span> Oreo
         </button>
-        <button class="opcion-topping" onclick="toggleTopping('Brownie', this)">
+        <button type="button" class="opcion-topping" id="topBrownie" onclick="toggleTopping('Brownie', this)">
           <span class="icono-topping">🍫</span> Brownie
         </button>
       </div>
     </div>
 
-    <!-- Paso 3: Selección de Canción de Ryan Castro con Vista Previa de Audio -->
+    <!-- Paso 3: Canción con Recomendaciones + Escritura Libre -->
     <div class="paso">
-      <div class="paso-titulo">3. Elige canción de Ryan Castro</div>
-      <select id="selectCancion" onchange="reproducirPreviewAudio()">
-        <option value="Una Cita (Remix)|https://open.spotify.com/track/15X3K9n2xXW0P9C3wYt0c3">Una Cita - Ryan Castro</option>
+      <div class="paso-titulo">3. Elige o escribe una canción</div>
+      <select id="selectCancion" onchange="seleccionarSugerencia(this)">
+        <option value="">-- Elige una recomendación de Ryan Castro --</option>
         <option value="Jordan|https://open.spotify.com/track/6Z8R6FR4GXCCKBp5WwP0M5">Jordan - Ryan Castro</option>
+        <option value="Una Cita (Remix)|https://open.spotify.com/track/15X3K9n2xXW0P9C3wYt0c3">Una Cita (Remix) - Ryan Castro</option>
         <option value="Monastery|https://open.spotify.com/track/307a5EwEhn5m6h42U95bXh">Monastery - Ryan Castro</option>
         <option value="El Cantante del Ghetto|https://open.spotify.com/track/4jVv4Y51T9qW00J2F4F7z0">El Cantante del Ghetto - Ryan Castro</option>
       </select>
+      <input type="text" id="inputCancionLibre" placeholder="O escribe otra canción o artista aquí..." maxlength="45" />
     </div>
 
     <!-- Paso 4: Datos del Usuario -->
     <div class="paso">
-      <input type="text" id="nombreUsuario" placeholder="Tu nombre o el de la persona..." maxlength="25" />
+      <input type="text" id="nombreUsuario" placeholder="Tu nombre..." maxlength="25" />
       <input type="text" id="fraseDedicatoria" placeholder="Escribe una frase para recordar..." maxlength="100" />
     </div>
 
-    <button class="btn-principal" onclick="generarExperiencia()">Generar mi Tarjeta</button>
+    <button type="button" class="btn-principal" onclick="generarExperiencia()">Generar mi Tarjeta</button>
 
-    <!-- Resultado Final con Código de Spotify Real -->
+    <!-- Resultado Final -->
     <section id="tarjeta-resultado">
       <div class="frase-sonora" id="tituloFinal">EL FLOW ÚNICO DE DANIELA</div>
       
       <div class="dedicatoria-box" id="textoDedicatoriaFinal">
-        "Una combinación con todo el estilo de Awoolandia."
+        "Una combinación con todo el estilo."
       </div>
 
-      <!-- Tarjeta de Spotify con Código Real Escaneable -->
       <div class="spotify-code-container">
         <div style="font-size: 0.75rem; color: #b3b3b3; display:flex; align-items:center; gap:6px;">
           <span>🟢</span> Escanea con la cámara de Spotify
         </div>
-        <!-- Código oficial de Spotify generado mediante la URI de la canción seleccionada -->
         <img id="imagenSpotifyCode" class="spotify-code-img" src="" alt="Spotify Code" />
         <div style="font-size: 0.8rem; font-weight: bold; color: #fff;" id="nombreCancionFinal">Jordan - Ryan Castro</div>
       </div>
 
       <div class="acciones-envio">
-        <button class="btn-secundario" onclick="enviarCorreo()">✉️ Enviar Correo</button>
-        <button class="btn-secundario" onclick="compartirAirDrop()">📲 Compartir / AirDrop</button>
+        <button type="button" class="btn-secundario" onclick="enviarCorreo()">✉️ Enviar Correo</button>
+        <button type="button" class="btn-secundario" onclick="compartirAirDrop()">📲 Compartir / AirDrop</button>
       </div>
     </section>
   </main>
@@ -399,76 +389,96 @@
   <script>
     let baseActual = 'leche';
     let toppingsSeleccionados = [];
+    let linkSpotifySeleccionado = 'https://open.spotify.com/track/6Z8R6FR4GXCCKBp5WwP0M5'; // Por defecto Jordan
 
-    // Sintetizador de audio sutil para feedback interactivo
-    function tocarBeat(frecuencia, tipo = 'triangle') {
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = tipo;
-      osc.frequency.setValueAtTime(frecuencia, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(45, ctx.currentTime + 0.15);
-      gain.gain.setValueAtTime(0.2, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.16);
+    // Sintetizador de audio melódico y duradero (Arpegio suave tipo teclado)
+    function tocarAcordeMelodico() {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioContext();
+        
+        const frecuencias = [261.63, 329.63, 392.00, 523.25]; // Acorde armonioso (C major)
+        frecuencias.forEach((freq, index) => {
+          setTimeout(() => {
+            if (ctx.state === 'suspended') ctx.resume();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, ctx.currentTime);
+            
+            gain.gain.setValueAtTime(0.15, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+            
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.55);
+          }, index * 90);
+        });
+      } catch (e) {
+        console.log('Audio contextual bloqueado o no soportado');
+      }
     }
 
-    function reproducirPreviewAudio() {
-      tocarBeat(220, 'sawtooth');
-      setTimeout(() => tocarBeat(330, 'triangle'), 120);
-    }
-
-    function seleccionarBase(tipo, btn) {
+    function seleccionarBase(tipo) {
       baseActual = tipo;
-      document.querySelectorAll('.opcion-base').forEach(b => b.classList.remove('activo'));
-      btn.classList.add('activo');
+      tocarAcordeMelodico();
 
+      const btnLeche = document.getElementById('btnLeche');
+      const btnBlanco = document.getElementById('btnBlanco');
       const chocolatina = document.getElementById('chocolatinaVisual');
       const subtexto = document.getElementById('subtextoBase');
 
       if (tipo === 'leche') {
+        btnLeche.classList.add('activo');
+        btnBlanco.classList.remove('activo');
         chocolatina.style.background = 'var(--choco-leche)';
+        chocolatina.style.color = '#fff';
         subtexto.innerText = 'CHOCOLATE DE LECHE';
-        tocarBeat(150, 'sawtooth');
       } else {
+        btnBlanco.classList.add('activo');
+        btnLeche.classList.remove('activo');
         chocolatina.style.background = 'var(--choco-blanco)';
-        subtexto.innerText = 'CHOCOLATE BLANCO';
         chocolatina.style.color = '#221208';
-        tocarBeat(260, 'sine');
+        subtexto.innerText = 'CHOCOLATE BLANCO';
       }
     }
 
     function toggleTopping(nombre, btn) {
+      tocarAcordeMelodico();
       btn.classList.toggle('activo');
       if (toppingsSeleccionados.includes(nombre)) {
         toppingsSeleccionados = toppingsSeleccionados.filter(t => t !== nombre);
-        tocarBeat(120, 'triangle');
       } else {
         toppingsSeleccionados.push(nombre);
-        tocarBeat(300, 'square');
       }
     }
 
-    function generarExperiencia() {
-      tocarBeat(380, 'sawtooth');
-      const nombre = document.getElementById('nombreUsuario'].value.trim() || 'Awoo Fan';
-      const frase = document.getElementById('fraseDedicatoria'].value.trim() || 'Un momento dulce con todo el flow.';
+    function seleccionarSugerencia(select) {
+      if (!select.value) return;
+      tocarAcordeMelodico();
+      const partes = select.value.split('|');
+      const nombreCancion = partes[0];
+      linkSpotifySeleccionado = partes[1];
       
-      const select = document.getElementById('selectCancion');
-      const valorSeleccionado = select.value.split('|');
-      const nombreCancion = valorSeleccionado[0];
-      const linkSpotify = valorSeleccionado[1];
+      // Llena automáticamente el input libre para que sepas qué canción quedó seleccionada
+      document.getElementById('inputCancionLibre').value = nombreCancion;
+    }
 
-      // Generador oficial de Spotify Codes (API pública de códigos de Spotify basados en URLs de tracks)
-      // Esto genera el código blanco y negro escaneable real vinculado a la canción escogida
-      const spotifyCodeUrl = `https://scannables.scdn.co/uri/plain/jpeg/1280/black/white/600/${encodeURIComponent(linkSpotify)}`;
+    function generarExperiencia() {
+      tocarAcordeMelodico();
+      const nombre = document.getElementById('nombreUsuario').value.trim() || 'Awoo Fan';
+      const frase = document.getElementById('fraseDedicatoria').value.trim() || 'Un momento dulce con todo el flow.';
+      const cancionLibre = document.getElementById('inputCancionLibre').value.trim();
+      
+      const nombreFinalCancion = cancionLibre !== '' ? cancionLibre : 'Jordan - Ryan Castro';
+
+      // Generador oficial de códigos de Spotify
+      const spotifyCodeUrl = `https://scannables.scdn.co/uri/plain/jpeg/1280/black/white/600/${encodeURIComponent(linkSpotifySeleccionado)}`;
 
       document.getElementById('tituloFinal').innerText = `El flow único de ${nombre}`;
       document.getElementById('textoDedicatoriaFinal').innerText = `"${frase}"`;
-      document.getElementById('nombreCancionFinal').innerText = nombreCancion;
+      document.getElementById('nombreCancionFinal').innerText = nombreFinalCancion;
       document.getElementById('imagenSpotifyCode').src = spotifyCodeUrl;
 
       document.getElementById('tarjeta-resultado').style.display = 'block';
@@ -488,12 +498,12 @@
     async function compartirAirDrop() {
       const titulo = document.getElementById('tituloFinal').innerText;
       const frase = document.getElementById('textoDedicatoriaFinal').innerText;
-      const textoCompartir = `${titulo} 🍫🔥 ${frase} — JUMBO x SPOTIFY (Awoolandia)`;
+      const textoCompartir = `${titulo} 🍫🔥 ${frase} — JUMBO x SPOTIFY`;
 
       if (navigator.share) {
         try {
           await navigator.share({
-            title: 'Mi Awoolatina Jumbo',
+            title: 'Mi Chocolatina Jumbo',
             text: textoCompartir,
             url: window.location.href
           });
